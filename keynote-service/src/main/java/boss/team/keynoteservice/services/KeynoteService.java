@@ -32,6 +32,10 @@ public class KeynoteService {
         return keynoteMapper.toKeynoteDTO(savedKeynote);
     }
 
+    public KeynoteDTO updateKeynote(KeynoteDTO keynoteDTO) throws KeynoteNotFoundException {
+        return keynoteMapper.toKeynoteDTO(keynoteRepository.save(findKeynote(keynoteDTO.getId())));
+    }
+
     public KeynoteDTO deleteKeynoteById(Long id) throws KeynoteNotFoundException {
         Keynote keynote =findKeynote(id);
         keynoteRepository.delete(keynote);

@@ -1,5 +1,8 @@
 package boss.team.keynoteservice.dtos;
 
+import lombok.Data;
+
+@Data
 public class KeynoteDTO {
     private Long id;
     private String firstName;

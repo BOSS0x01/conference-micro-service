@@ -18,18 +18,28 @@ public class KeynoteController {
 
     KeynoteService keynoteService;
 
-    @GetMapping
-    public ResponseEntity<KeynoteDTO> getKeynoteById(Long id) throws KeynoteNotFoundException {
+    @GetMapping("/{id}")
+    public ResponseEntity<KeynoteDTO> getKeynoteById(@PathVariable Long id) throws KeynoteNotFoundException {
         return ResponseEntity.ok(keynoteService.getKeynoteById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<KeynoteDTO>> keynoteList() throws KeynoteNotFoundException {
+    public ResponseEntity<List<KeynoteDTO>> keynoteList() {
         return ResponseEntity.ok(keynoteService.keynoteList());
     }
 
-    @DeleteMapping
-    public ResponseEntity<KeynoteDTO> deleteKeynoteById(Long id) throws KeynoteNotFoundException {
+    @PostMapping
+    public ResponseEntity<KeynoteDTO> saveKeynote(@RequestBody KeynoteDTO keynoteDTO) {
+        return ResponseEntity.ok(keynoteService.saveKeynote(keynoteDTO));
+    }
+
+    @PatchMapping
+    public ResponseEntity<KeynoteDTO> patchKeynote(@RequestBody KeynoteDTO keynoteDTO) throws KeynoteNotFoundException {
+        return ResponseEntity.ok(keynoteService.updateKeynote(keynoteDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<KeynoteDTO> deleteKeynoteById(@PathVariable Long id) throws KeynoteNotFoundException {
         return ResponseEntity.ok(keynoteService.deleteKeynoteById(id));
     }
 }
