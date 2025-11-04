@@ -5,6 +5,8 @@ import boss.team.conferenceservice.entities.Conference;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
 
 @Service
 

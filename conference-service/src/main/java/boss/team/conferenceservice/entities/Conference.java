@@ -1,10 +1,8 @@
 package boss.team.conferenceservice.entities;
 
 import boss.team.conferenceservice.enums.ConferenceType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor
@@ -24,4 +23,7 @@ public class Conference {
     private ConferenceType type;
     private LocalDate date;
     private Duration duration;
+
+    @OneToMany(mappedBy = "conference")
+    private List<Review> reviews;
 }

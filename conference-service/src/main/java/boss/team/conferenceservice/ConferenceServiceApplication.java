@@ -1,8 +1,13 @@
 package boss.team.conferenceservice ;
+import boss.team.conferenceservice.dtos.ConferenceDTO;
+import boss.team.conferenceservice.dtos.ReviewDTO;
 import boss.team.conferenceservice.entities.Conference;
+import boss.team.conferenceservice.entities.Review;
 import boss.team.conferenceservice.enums.ConferenceType;
 import boss.team.conferenceservice.mappers.ConferenceMapper;
+import boss.team.conferenceservice.mappers.ReviewMapper;
 import boss.team.conferenceservice.services.ConferenceService;
+import boss.team.conferenceservice.services.ReviewService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +26,7 @@ public class ConferenceServiceApplication {
     }
 
     @Bean
-    CommandLineRunner init(ConferenceService conferenceService, ConferenceMapper conferenceMapper) {
+    CommandLineRunner init(ConferenceService conferenceService, ConferenceMapper conferenceMapper, ReviewService reviewService, ReviewMapper reviewMapper) {
         return args -> {
             List<String> titles = List.of("AI Summit", "Cloud Expo", "Tech Innovators", "Big Data Forum", "CyberSec Week", "DevOps Days", "IoT Connect");
             List<ConferenceType> types = List.of(ConferenceType.ACADEMIC, ConferenceType.COMMERCIAL);
@@ -36,7 +41,21 @@ public class ConferenceServiceApplication {
                         .duration(Duration.ofHours(2 + random.nextInt(4))) // duration 2–5 hours
                         .build();
 
-                conferenceService.saveConference(conferenceMapper.toConferenceDTO(conference));
+                ConferenceDTO savedConf= conferenceService.saveConference(conferenceMapper.toConferenceDTO(conference));
+                System.out.println(savedConf);
+
+                System.out.println(savedConf.getId());
+                List.of("nice one ","ggs","dam he was laughing","lmao what is this ","nigga what ","worst shit ever","not bad").forEach(
+                        s ->{
+                            reviewService.saveReview(ReviewDTO.builder()
+                                            .text(s)
+                                            .stars(random.nextInt(5)+1)
+                                            .date(LocalDate.now().plusDays(random.nextInt(30)))
+                                            .conferenceId(savedConf.getId())
+                                    .build());
+                        }
+                );
+
             });
         };
     }
